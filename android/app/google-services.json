@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "190598010115",
+    "project_id": "tasklieapp",
+    "storage_bucket": "tasklieapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190598010115:android:137061216433e02664c536",
+        "android_client_info": {
+          "package_name": "com.example.tasklie_new"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190598010115-302phgnc7fookmg9skctii11il1bhahg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJhndws0ruag-Sb1713d_c5vuOmzpkLYI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190598010115-302phgnc7fookmg9skctii11il1bhahg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
