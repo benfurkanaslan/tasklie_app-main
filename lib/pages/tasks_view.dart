@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tasklie_new/components/extension.dart';
 import 'package:tasklie_new/core/card_widget.dart';
 import 'package:tasklie_new/main.dart';
+import 'package:tasklie_new/pages/message_view.dart';
 import 'package:tasklie_new/project_details/project_color.dart';
 
 ScrollController _scrollController = ScrollController();
@@ -47,7 +48,14 @@ class _TaskViewPageState extends State<TaskViewPage> {
             ListTileWidget(taskType: widget.weekTask, taskTotal: widget.weekTaskTotal),
             Expanded(
               child: swp.Swiper(
-                itemCount: currentTasks.length,
+                // itemCount: currentTasks.length,
+                itemCount: (() {
+                  if (currentTasks.isNotEmpty) {
+                    return currentTasks.length;
+                  } else {
+                    return 1;
+                  }
+                }()),
                 autoplay: true,
                 autoplayDelay: 5000,
                 autoplayDisableOnInteraction: true,
@@ -58,33 +66,75 @@ class _TaskViewPageState extends State<TaskViewPage> {
                   setState(() => _dotPosition = value.toDouble());
                 },
                 itemBuilder: (context, index) {
-                  return Container(
-                    margin: const EdgeInsets.only(
-                      right: 15,
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      color: ProjectColorsUtitilty().containerColor,
-                    ),
-                    width: context.dynamicWidth(203),
-                    height: context.dynamicHeight(230),
-                    child: Column(
-                      children: [
-                        Expanded(child: containerTitle()),
-                        Expanded(child: containerNote()),
-                        Expanded(child: containerTeamAvatars()),
-                        Expanded(child: containerDate()),
-                      ],
-                    ),
-                  );
+                  (() {
+                    if (currentTasks.isNotEmpty) {
+                      return GestureDetector(
+                        onTap: () {
+                          String messageViewConversationId =
+                              '${currentTasks[index].projectDocName.split('-')[1]}-${currentTasks[index].projectDocName.split('-')[3]}-${currentTasks[index].teamId}';
+                          // messageViewConversationId = 'teamName-projectId-teamId'
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => MessageView(messageViewConversationId: messageViewConversationId)));
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.only(
+                            right: 15,
+                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.all(Radius.circular(10)),
+                            color: ProjectColorsUtitilty().containerColor,
+                          ),
+                          width: context.dynamicWidth(203),
+                          height: context.dynamicHeight(230),
+                          child: Column(
+                            children: [
+                              Expanded(child: containerTitle()),
+                              Expanded(child: containerNote()),
+                              Expanded(child: containerTeamAvatars()),
+                              Expanded(child: containerDate()),
+                            ],
+                          ),
+                        ),
+                      );
+                    } else {
+                      return Container(
+                        margin: const EdgeInsets.only(
+                          right: 15,
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(Radius.circular(10)),
+                          color: ProjectColorsUtitilty().containerColor,
+                        ),
+                        width: context.dynamicWidth(203),
+                        height: context.dynamicHeight(230),
+                        child: Center(
+                          child: Text(
+                            "Görev Yok",
+                            style: GoogleFonts.roboto(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.grey.shade800,
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                  }());
+                  return Container();
                 },
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: DotsIndicator(
-                dotsCount: currentTasks.length,
+                dotsCount: (() {
+                  if (currentTasks.isNotEmpty) {
+                    return currentTasks.length;
+                  } else {
+                    return 1;
+                  }
+                }()),
                 position: _dotPosition,
                 decorator: DotsDecorator(
                   activeColor: Colors.grey.shade800,
